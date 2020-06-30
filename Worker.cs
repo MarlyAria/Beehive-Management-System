@@ -6,15 +6,21 @@ using System.Threading.Tasks;
 
 namespace Beehive_Management_System
 {
-    class Worker
+    class Worker: Bee
     {
         private string[] jobsICanDo;
-        public Worker(string[] jobsICanDo)
-            /*theconstructer set the jobsICanDo field, which is a string array.
-             * it's private because we want the queen to ask the worker to do a job,
-             * rather than make her check wether he knows how to do it*/
+        public Worker(string[] jobsICanDo, double weightMg)
+            : base(weightMg)
         {
             this.jobsICanDo = jobsICanDo; 
+        }
+        const double honeyUnitsPerShiftWorked = .65;
+
+        public override double HoneyConsumptionRate()
+        {
+            double consumption = base.HoneyConsumptionRate();
+            consumption += shiftsWorked * honeyUnitsPerShiftWorked;
+            return consumption;
         }
         public int ShiftsLeft
         {
